@@ -6,7 +6,7 @@ export default class Matching extends Component {
     return (
       <View style={styles.container}>
         <Text>This is the Matching Screen</Text>
-        <Text>Whole lotta stuff gonna go down here</Text>
+        <Text> {this.props.currentUser} </Text>
       </View>
     );
   }
@@ -19,3 +19,14 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
     }
 });
+
+export default connect(
+  (state) => ({
+    currentUser: get(state, login.userID)
+  }),
+  (dispatch) => ({}),
+  null, 
+  {
+    withRef: true
+  }
+)(Matching);

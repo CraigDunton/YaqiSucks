@@ -1,9 +1,19 @@
 import React, { Component } from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import { View, Text, Button, StyleSheet, TextInput } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import verifyUser from '../helpers/verifyUser'
+import { loginSuccess , loginFail } from '../actions/login'
+import { connect } from 'react-redux'
 
-export default class Login extends Component {
+export class Login extends Component {
+  constructor(props) {
+  super(props);
+  this.state = {
+    username: "",
+    password: ""
+  };
+}
+
 
   toSignUp = () => {
     this.props.navigation.navigate('UserForm');
@@ -15,12 +25,14 @@ export default class Login extends Component {
   login = () => {
     var userid = -1;
     //verifyUser(email,password)
-    verifyUser("craig@email.com","password").then(response => {
+    verifyUser(this.state.username,this.state.password).then(response => {
       userid = response;
 
       if(!(userid > -1)){
+        dispatchLoginFail();
         //failed Login
       } else{
+        dispatchLoginSuccess();
         //successful login
         //reset the stack
         const resetAction = NavigationActions.reset({
@@ -39,9 +51,22 @@ export default class Login extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <TextInput 
+        style = {styles.textBox}
+        placeholder="Username"
+        placeholderTextColor="#575250" 
+        onChangeText={(username) => this.setState({username})}
+        />
+        <TextInput 
+        style = {styles.textBox}
+        placeholder="Password"
+        placeholderTextColor="#575250" 
+        onChangeText={(password) => this.setState({password})}
+        />
+
         <Text style={styles.text}>This is the Login Screen</Text>
         <View style={styles.buttonHolder}>
-          <Button onPress={this.login} title="Sucessful login"/>
+          <Button onPress={this.login} title="Login"/>
           <Button onPress={this.toSignUp} title="Sign Up"/>
         </View>
         <View style = {styles.buttonStyle}>
@@ -51,6 +76,19 @@ export default class Login extends Component {
     );
   }
 }
+
+export default connect(
+  (state) => ({}),
+  (dispatch) => (
+  {
+    dispatchLoginSuccess: flowRight(dispatch , loginSuccess),
+    dispatchLoginFail: flowRight(dispatch , loginFail)
+  }),
+  null, 
+  {
+    withRef: true
+  }
+)(Login);
 
 const styles = StyleSheet.create({
     container: {
@@ -71,5 +109,8 @@ const styles = StyleSheet.create({
     },
     buttonStyle: {
       margin: 50,
-    }
+    },
+    textBox: {
+      height: 80,
+  },
 });
