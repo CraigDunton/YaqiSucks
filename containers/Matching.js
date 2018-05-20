@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import { Text, StyleSheet, View } from 'react-native';
+import { connect } from 'react-redux';
+import { get } from 'lodash';
 
-export default class Matching extends Component {
+export class Matching extends Component {
+  
   render() {
     return (
       <View style={styles.container}>
         <Text>This is the Matching Screen</Text>
-        <Text> {this.props.currentUser} </Text>
+        <Text> User: {this.props.currentUser} </Text>
       </View>
     );
   }
@@ -22,7 +25,7 @@ const styles = StyleSheet.create({
 
 export default connect(
   (state) => ({
-    currentUser: get(state, login.userID)
+    currentUser: get(state, 'login.userID')
   }),
   (dispatch) => ({}),
   null, 
