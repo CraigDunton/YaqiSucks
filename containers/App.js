@@ -17,19 +17,6 @@ export default class AppWithNavigationState extends Component {
     nav: PropTypes.object.isRequired,
   };
 
-  componentDidMount() {
-    // this.backHandler = BackHandler.addEventListener('backPress', () => {
-    //   console.log("backpress");
-    //   this.props.dispatch(NavigationActions.back());
-    //   goBack(null);
-    //   return true;
-    // });
-  }
-
-  componentWillUnmount() {
-    // this.backHandler.remove();
-  }
-
   render() {
     // const { dispatch, nav } = this.props;
     // this.backHandler = BackHandler.addEventListener('backPress', () => {
