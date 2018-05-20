@@ -1,0 +1,9 @@
+open android studio ... open existing project ... open the folder your project is in (should select android folder)
+run android device
+open command prompt in project folder ... react-native run-android
+
+things like react navigation ... npm install --save react-navigation ... must be reinstalled into project folder if you create a new project
+
+to debug remotly ... must open
+	http://localhost:8081/debugger-ui
+first ... then start remote debugging

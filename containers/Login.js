@@ -9,6 +9,9 @@ export default class Login extends Component {
     this.props.navigation.navigate('UserForm');
   };
 
+  toAddOrg = () => {
+    this.props.navigation.navigate('OrgForm');
+  };
   login = () => {
     var userid = -1;
     //verifyUser(email,password)
@@ -41,6 +44,9 @@ export default class Login extends Component {
           <Button onPress={this.login} title="Sucessful login"/>
           <Button onPress={this.toSignUp} title="Sign Up"/>
         </View>
+        <View style = {styles.buttonStyle}>
+            <Button style = {styles.buttonStyle} onPress={this.toAddOrg} title="Add Orginization"/>
+        </View>
       </View>
     );
   }
@@ -62,5 +68,8 @@ const styles = StyleSheet.create({
       fontSize: 32,
       marginTop: 150,
       marginBottom: 100,
+    },
+    buttonStyle: {
+      margin: 50,
     }
 });
