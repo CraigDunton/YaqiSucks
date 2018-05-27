@@ -11,7 +11,8 @@ export class Login extends Component {
   super(props);
   this.state = {
     username: "",
-    password: ""
+    password: "",
+    errorMessage: ''
   };
 }
 
@@ -28,9 +29,13 @@ export class Login extends Component {
     //verifyUser(email,password)
     verifyUser(this.state.username,this.state.password).then(response => {
       userid = response;
+      let errorMessageActive = 'Error Logging In'
 
       if(!(userid > -1)){
         this.props.dispatchLoginFail();
+        this.setState({
+          errorMessage: errorMessageActive
+        })
         //failed Login
       } else{
         this.props.dispatchLoginSuccess(userid);
@@ -51,8 +56,11 @@ export class Login extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.text}>This is the Login Screen</Text>
+      <View style={styles.mainContainer}>
+        <View style={styles.titleContainer}>
+          <Text style={styles.text}>Yaqi Sucks </Text>
+          <Text style={styles.errorText}> {this.state.errorMessage} </Text>
+        </View>
         <TextInput 
         style = {styles.textBox}
         placeholder="Username"
@@ -78,7 +86,9 @@ export class Login extends Component {
 }
 
 export default connect(
-  (state) => ({}),
+  (state) => ({
+    loginError: get(state, 'login.LOGIN_ERROR')
+  }),
   (dispatch) => (
   {
     dispatchLoginSuccess: flowRight(dispatch , loginSuccess),
@@ -91,11 +101,18 @@ export default connect(
 )(Login);
 
 const styles = StyleSheet.create({
-    container: {
+    mainContainer: {
       flex: 1,
       justifyContent: 'flex-start',
       alignItems: 'stretch',
       padding: 10,
+    },
+    titleContainer: {
+      flex: 1,
+      justifyContent: 'flex-start',
+      alignItems: 'stretch',
+      padding: 10,
+      alignItems: 'center',
     },
     buttonHolder: {
       height: 120,
@@ -105,7 +122,13 @@ const styles = StyleSheet.create({
     text: {
       fontSize: 32,
       marginTop: 150,
+      marginBottom: 80,
+    },
+    errorText: {
+      fontSize: 24,
+      marginTop: 10,
       marginBottom: 100,
+      color: 'red'
     },
     buttonStyle: {
       margin: 50,
