@@ -19,16 +19,22 @@ export default class UserFormContainer extends React.Component {
       let number = this.state.number;
       let code = this.state.code;
       //console.log("Passing in: "+fname+" "+lname+" "+password+" "+email+" "+number+" "+code)
-      createUser(fname,lname,password,email,number,code).then(response => {
-        var userId = response;
-        const resetAction = NavigationActions.reset({
-          index: 0,
-          actions: [
-            NavigationActions.navigate({ routeName: 'Scheduler', params: {userid: userId} }),
-          ],
-        });
-        dispatch(resetAction);
-      });
+      if (fname && lname && password && email && number && code){
+        alert('Creating User')
+        createUser(fname,lname,password,email,number,code).then(response => {
+          var userId = response;
+          const resetAction = NavigationActions.reset({
+            index: 0,
+            actions: [
+              NavigationActions.navigate({ routeName: 'Scheduler', params: {userid: userId} }),
+            ],
+          });
+          dispatch(resetAction);
+        })
+      } else {
+          alert('Must Fill All Fields')
+      };
+
 
       //set user token = the ID of user created before dispatch
 
