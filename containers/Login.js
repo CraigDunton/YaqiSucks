@@ -40,6 +40,7 @@ export class Login extends Component {
           index: 0,
           actions: [
             //we navigate to matching with the param userid set so we know who logged in
+            //we no longer need to do this bc redux
             NavigationActions.navigate({ routeName: 'Matching',params: {userid: userid} }),
           ],
         });
