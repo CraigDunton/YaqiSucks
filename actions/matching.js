@@ -2,20 +2,18 @@ import matchUser from '../helpers/matchUser';
 
 export function beginMatching(uid, orgCode) {
 return async (dispatch, getState) => {
-	let response;
+	var response;
 
 	try {
 		response = await matchUser(uid, orgCode);
 	} catch (err) {
-		return dispatch(matchFail('Something went wrong...Try again?'))
+		return dispatch(matchFail('Something went wrong...Try again?'));
 	}
-
-	if(response.error){
-		//not sure what an error looks like... might just be returned as response
-		return dispatch(matchFail(response.error));
-	} else {
-		return dispatch(matchSuccess(response));
-	}
+	console.log("response:",response)
+		if(response) {
+			return dispatch(matchSuccess(response));
+		}
+		return dispatch(matchFail('We couldn\'t find anybody to match you with, sorry!'));
 };
 
 }

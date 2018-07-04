@@ -3,19 +3,23 @@ import { Text, StyleSheet, View, Button } from 'react-native';
 import { connect } from 'react-redux';
 import { get, flowRight } from 'lodash';
 import { beginMatching } from '../actions/matching';
+import { beginMet } from '../actions/met';
 
 export class Matching extends Component {
-  
+
   match() {
     this.props.dispatchMatchUser(this.props.currentUser, 'accrox');
   }
-  
+
   met() {
-    console.log("Met")
+    //call met action
+    this.props.dispatchMetUser(this.props.currentUser, this.props.match.id)
+    //call match action
+    this.match()
   }
-  
+
   _renderMatch() {
-    if(this.props.match){
+    if(!this.props.matchError && this.props.match){
       return(
         <View>
           <Text style={styles.title}>{"Here\'s your match:"}</Text>
@@ -29,14 +33,23 @@ export class Matching extends Component {
     } else {
       return(
         <View>
-          <Text>This is the Matching Screen</Text>
-          <Text> User: {this.props.currentUser} </Text>
+          {this._renderMatchError()}
           <Button style = {styles.buttonStyle} onPress={() => this.match()} title="Find Match"/>
         </View>
       );
     }
   }
-  
+
+  _renderMatchError() {
+    if(this.props.matchError){
+      return(
+        <Text style={styles.match}>{this.props.matchError}</Text>
+      );
+    } else {
+      return null
+    }
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -73,11 +86,13 @@ export default connect(
   (state) => ({
     currentUser: get(state, 'login.userID'),
     match: get(state, 'matching.match'),
+    matchError: get(state, 'matching.matchError')
   }),
   (dispatch) => ({
     dispatchMatchUser: flowRight(dispatch, beginMatching),
+    dispatchMetUser: flowRight(dispatch, beginMet),
   }),
-  null, 
+  null,
   {
     withRef: true
   }

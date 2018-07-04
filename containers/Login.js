@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Button, StyleSheet, TextInput } from 'react-native';
+import { View, Text, Button, StyleSheet, TextInput, Alert } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import verifyUser from '../helpers/verifyUser'
 import { loginSuccess , loginFail } from '../actions/login'
@@ -31,6 +31,7 @@ export class Login extends Component {
 
       if(!(userid > -1)){
         this.props.dispatchLoginFail();
+        Alert.alert('Login Error','Incorrect email or password')
         //failed Login
       } else{
         this.props.dispatchLoginSuccess(userid);
@@ -54,16 +55,17 @@ export class Login extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.text}>This is the Login Screen</Text>
-        <TextInput 
+        <TextInput
         style = {styles.textBox}
         placeholder="Username"
-        placeholderTextColor="#575250" 
+        placeholderTextColor="#575250"
         onChangeText={(username) => this.setState({username})}
         />
-        <TextInput 
+        <TextInput
         style = {styles.textBox}
         placeholder="Password"
-        placeholderTextColor="#575250" 
+        placeholderTextColor="#575250"
+        secureTextEntry={true}
         onChangeText={(password) => this.setState({password})}
         />
         <View style={styles.buttonHolder}>
@@ -79,13 +81,15 @@ export class Login extends Component {
 }
 
 export default connect(
-  (state) => ({}),
+  (state) => ({
+    loginError: get(state, 'login.LOGIN_ERROR')
+  }),
   (dispatch) => (
   {
     dispatchLoginSuccess: flowRight(dispatch , loginSuccess),
     dispatchLoginFail: flowRight(dispatch , loginFail)
   }),
-  null, 
+  null,
   {
     withRef: true
   }
