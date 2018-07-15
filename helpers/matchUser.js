@@ -1,5 +1,5 @@
 export default function matchUser(userId, orgCode){
-  return fetch('http://192.168.1.115:3000/api/matchUser', {
+  return fetch('http://limitless-shore-53582.herokuapp.com/api/matchUser', {
     method: 'POST',
     headers: {
       Accept: 'application/json',

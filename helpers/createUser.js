@@ -1,7 +1,7 @@
 
 export default function createUser(fName, lName, pw, email, phone, orgCode){
   var userId = -1;
-  return fetch('http://192.168.1.115:3000/api/users', {
+  return fetch('http://limitless-shore-53582.herokuapp.com/api/users', {
     method: 'POST',
     headers: {
       Accept: 'application/json',

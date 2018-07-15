@@ -1,7 +1,7 @@
 
 export default function createOrg(orgCode , orgName){
   var userId = -1;
-  return fetch('http://192.168.1.115:3000/api/orgs', {
+  return fetch('http://limitless-shore-53582.herokuapp.com/api/orgs', {
     method: 'POST',
     headers: {
       Accept: 'application/json',

@@ -1,5 +1,5 @@
 export default function metUser(uid, mid){
-  return fetch('http://192.168.1.115:3000/api/metUser', {
+  return fetch('http://limitless-shore-53582.herokuapp.com/api/metUser', {
     method: 'POST',
     headers: {
       Accept: 'application/json',

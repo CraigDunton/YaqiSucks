@@ -1,7 +1,7 @@
 
 //returns the users id if success, otherwise -1
 export default function verifyUser(email, pw){
-  return fetch('http://192.168.1.115:3000/api/verifyUser', {
+  return fetch('http://limitless-shore-53582.herokuapp.com/api/verifyUser', {
     method: 'POST',
     headers: {
       Accept: 'application/json',

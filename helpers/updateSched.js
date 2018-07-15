@@ -1,7 +1,7 @@
 
 export default function updateSched(sched, uid){
   var userId = -1;
-  return fetch('http://192.168.1.115:3000/api/users/'+uid, {
+  return fetch('http://limitless-shore-53582.herokuapp.com/api/users/'+uid, {
     method: 'PUT',
     headers: {
       Accept: 'application/json',
