@@ -1,15 +1,13 @@
-
-export default function createOrg(orgCode , orgName){
-  var userId = -1;
-  return fetch('http://limitless-shore-53582.herokuapp.com/api/orgs', {
+export default function matchUser(userId, orgCode){
+  return fetch('http://limitless-shore-53582.herokuapp.com/api/matchUser', {
     method: 'POST',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      orgCode: orgCode,
-      orgName: orgName,
+      uid: userId,
+      orgCode: orgCode
     })
   }).then(res => res.json())
   .catch(error => {
@@ -17,8 +15,8 @@ export default function createOrg(orgCode , orgName){
    })
   .then(response => {
     console.log("Server Response:", response);
-    var userId = response.data;
-    return userId;
+    const match = response.data;
+    return match;
   });
 
 }

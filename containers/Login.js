@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Button, StyleSheet, TextInput } from 'react-native';
+import { View, Text, Button, StyleSheet, TextInput, Alert } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import verifyUser from '../helpers/verifyUser'
 import { loginSuccess , loginFail } from '../actions/login'
@@ -33,9 +33,7 @@ export class Login extends Component {
 
       if(!(userid > -1)){
         this.props.dispatchLoginFail();
-        this.setState({
-          errorMessage: errorMessageActive
-        })
+        Alert.alert('Login Error','Incorrect email or password')
         //failed Login
       } else{
         this.props.dispatchLoginSuccess(userid);
@@ -45,6 +43,7 @@ export class Login extends Component {
           index: 0,
           actions: [
             //we navigate to matching with the param userid set so we know who logged in
+            //we no longer need to do this bc redux
             NavigationActions.navigate({ routeName: 'Matching',params: {userid: userid} }),
           ],
         });
@@ -56,21 +55,19 @@ export class Login extends Component {
 
   render() {
     return (
-      <View style={styles.mainContainer}>
-        <View style={styles.titleContainer}>
-          <Text style={styles.text}>Yaqi Sucks </Text>
-          <Text style={styles.errorText}> {this.state.errorMessage} </Text>
-        </View>
-        <TextInput 
+      <View style={styles.container}>
+        <Text style={styles.text}>This is the Login Screen</Text>
+        <TextInput
         style = {styles.textBox}
         placeholder="Username"
-        placeholderTextColor="#575250" 
+        placeholderTextColor="#575250"
         onChangeText={(username) => this.setState({username})}
         />
-        <TextInput 
+        <TextInput
         style = {styles.textBox}
         placeholder="Password"
-        placeholderTextColor="#575250" 
+        placeholderTextColor="#575250"
+        secureTextEntry={true}
         onChangeText={(password) => this.setState({password})}
         />
         <View style={styles.buttonHolder}>
@@ -94,7 +91,7 @@ export default connect(
     dispatchLoginSuccess: flowRight(dispatch , loginSuccess),
     dispatchLoginFail: flowRight(dispatch , loginFail)
   }),
-  null, 
+  null,
   {
     withRef: true
   }
