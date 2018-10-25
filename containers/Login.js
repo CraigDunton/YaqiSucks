@@ -11,7 +11,8 @@ export class Login extends Component {
   super(props);
   this.state = {
     username: "",
-    password: ""
+    password: "",
+    errorMessage: ''
   };
 }
 
@@ -28,6 +29,7 @@ export class Login extends Component {
     //verifyUser(email,password)
     verifyUser(this.state.username,this.state.password).then(response => {
       userid = response;
+      let errorMessageActive = 'Error Logging In'
 
       if(!(userid > -1)){
         this.props.dispatchLoginFail();
@@ -96,11 +98,18 @@ export default connect(
 )(Login);
 
 const styles = StyleSheet.create({
-    container: {
+    mainContainer: {
       flex: 1,
       justifyContent: 'flex-start',
       alignItems: 'stretch',
       padding: 10,
+    },
+    titleContainer: {
+      flex: 1,
+      justifyContent: 'flex-start',
+      alignItems: 'stretch',
+      padding: 10,
+      alignItems: 'center',
     },
     buttonHolder: {
       height: 120,
@@ -110,7 +119,13 @@ const styles = StyleSheet.create({
     text: {
       fontSize: 32,
       marginTop: 150,
+      marginBottom: 80,
+    },
+    errorText: {
+      fontSize: 24,
+      marginTop: 10,
       marginBottom: 100,
+      color: 'red'
     },
     buttonStyle: {
       margin: 50,
